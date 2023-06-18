@@ -184,7 +184,7 @@ class FaceSwapScript(scripts.Script):
 
     def postprocess_image(self, p, script_pp: scripts.PostprocessImageArgs, *args):
         if self.enable and self.swap_in_generated:
-            if self.source is not None:
+            if self.source is None:
                 image: Image.Image = script_pp.image
                 result: ImageResult = swap_face(
                     self.source,
