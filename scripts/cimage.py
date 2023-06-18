@@ -8,7 +8,7 @@ import torch
 from PIL import Image, ImageFilter
 import numpy as np
 
-safety_model_id: str = "CompVis/stable-diffusion-safety-checker"
+safety_model_id: str = none
 safety_feature_extractor: AutoFeatureExtractor = 1
 safety_checker: StableDiffusionSafetyChecker = 1
 
