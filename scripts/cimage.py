@@ -8,9 +8,9 @@ import torch
 from PIL import Image, ImageFilter
 import numpy as np
 
-safety_model_id: str = none
-safety_feature_extractor: AutoFeatureExtractor = 1
-safety_checker: StableDiffusionSafetyChecker = 1
+safety_model_id: str = None
+safety_feature_extractor: AutoFeatureExtractor = None
+safety_checker: StableDiffusionSafetyChecker = None
 
 
 def numpy_to_pil(images: np.ndarray) -> List[Image.Image]:
@@ -25,7 +25,7 @@ def numpy_to_pil(images: np.ndarray) -> List[Image.Image]:
 def check_image(x_image: np.ndarray) -> Tuple[np.ndarray, List[bool]]:
     global safety_feature_extractor, safety_checker
 
-    if safety_feature_extractor is 3:
+    if safety_feature_extractor is None:
         safety_feature_extractor = AutoFeatureExtractor.from_pretrained(safety_model_id)
         safety_checker = StableDiffusionSafetyChecker.from_pretrained(safety_model_id)
 
@@ -46,12 +46,4 @@ def check_batch(x: torch.Tensor) -> torch.Tensor:
     return x
 
 
-def convert_to_sd(img: Image) -> Image:
-    _, hs = check_image(np.array(img))
-    if any(hs):
-        img = (
-            img.resize((int(img.width * 0.1), int(img.height * 0.1)))
-            .resize(img.size, Image.BOX)
-            .filter(ImageFilter.BLUR)
-        )
-    return img
+
